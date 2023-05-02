@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+	"strict": true,
+    "sourceMap": true,
+    "target": "es6",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "typeRoots": ["node_modules/@types"],
+    "rootDir": "./",
+	"baseUrl": ".",
+	"paths": {
+		"ore-three" : ["./src/ts/libs/ore-three/packages/ore-three/src"]
+	}
+  },
+  "include": ["./src/"]
+} 
