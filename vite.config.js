@@ -28,7 +28,9 @@ export default defineConfig( {
 		port: 3000,
 		host: "0.0.0.0",
 	},
+	publicDir: "public",
 	build: {
+		outDir: '../public/',
 		rollupOptions: {
 			input,
 			output: {

@@ -1,15 +1,12 @@
-import { CameraController } from './CameraController';
+import * as THREE from 'three';
 import { GlobalManager } from './GlobalManager';
-import { AssetManager } from './GlobalManager/AssetManager';
-import { RenderPipeline } from './RenderPipeline';
 import { World } from './World';
 import * as ORE from 'ore-three';
 export class MainScene extends ORE.BaseLayer {
 
 	private gManager: GlobalManager;
-	private renderPipeline: RenderPipeline;
 
-	private cameraController?: CameraController;
+	private oCamera: THREE.OrthographicCamera;
 	private world?: World;
 
 	constructor( param: ORE.LayerParam ) {
@@ -17,6 +14,11 @@ export class MainScene extends ORE.BaseLayer {
 		super( param );
 
 		this.commonUniforms = ORE.UniformsLib.mergeUniforms( this.commonUniforms, {} );
+
+		this.oCamera = new THREE.OrthographicCamera();
+
+		this.camera.position.set( 0.0, 0.0, 1 );
+		this.camera.lookAt( 0, 0, 0 );
 
 		/*-------------------------------
 			Gmanager
@@ -26,30 +28,15 @@ export class MainScene extends ORE.BaseLayer {
 
 		this.gManager.assetManager.load( {
 			assets: [
-				{ name: 'scene', path: '/assets/scene/scene.glb', type: 'gltf' }
 			]
 		} );
 
 		this.gManager.assetManager.addEventListener( 'loadMustAssets', ( e ) => {
 
-			const gltf = ( e.target as AssetManager ).getGltf( 'scene' );
-
-			if ( gltf ) {
-
-				this.scene.add( gltf.scene );
-
-			}
-
 			this.initScene();
 			this.onResize();
 
 		} );
-
-		/*-------------------------------
-			RenderPipeline
-		-------------------------------*/
-
-		this.renderPipeline = new RenderPipeline( this.renderer, this.commonUniforms );
 
 	}
 
@@ -68,12 +55,6 @@ export class MainScene extends ORE.BaseLayer {
 	private initScene() {
 
 		/*-------------------------------
-			CameraController
-		-------------------------------*/
-
-		this.cameraController = new CameraController( this.camera, this.scene.getObjectByName( 'CameraData' ) );
-
-		/*-------------------------------
 			World
 		-------------------------------*/
 
@@ -90,19 +71,13 @@ export class MainScene extends ORE.BaseLayer {
 
 		}
 
-		if ( this.cameraController ) {
-
-			this.cameraController.update( deltaTime );
-
-		}
-
 		if ( this.world ) {
 
-			this.world.update( deltaTime );
+			this.world.update( deltaTime, this.oCamera );
 
 		}
 
-		this.renderPipeline.render( this.scene, this.camera );
+		this.renderer.render( this.scene, this.camera );
 
 	}
 
@@ -110,29 +85,15 @@ export class MainScene extends ORE.BaseLayer {
 
 		super.onResize();
 
-		if ( this.cameraController ) {
-
-			this.cameraController.resize( this.info );
-
-		}
-
 		if ( this.world ) {
 
 			this.world.resize( this.info );
 
 		}
 
-		this.renderPipeline.resize( this.info );
-
 	}
 
 	public onHover( args: ORE.TouchEventArgs ) {
-
-		if ( this.cameraController ) {
-
-			this.cameraController.updateCursor( args.screenPosition );
-
-		}
 
 	}
 
