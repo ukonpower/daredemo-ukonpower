@@ -28,7 +28,7 @@ export class Omen extends THREE.Mesh {
 
 		this.commonUniforms = commonUniforms;
 
-		new THREE.TextureLoader().load( '/tex/ukonpower.jpg', ( tex ) => {
+		new THREE.TextureLoader().load( BASE_PATH + '/tex/ukonpower.jpg', ( tex ) => {
 
 			this.commonUniforms.uTex.value = tex;
 
