@@ -12,5 +12,9 @@
 		"project": "./tsconfig.json"
 	},
 	"rules": {
+	},
+	"globals": {
+		"faceapi": "readonly",
+		"BASE_PATH": "readonly"
 	}
 }

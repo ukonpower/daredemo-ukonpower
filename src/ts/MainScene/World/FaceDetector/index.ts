@@ -25,10 +25,10 @@ export class FaceDetector extends EventEmitter {
 	private async init() {
 
 		await Promise.all( [
-			faceapi.loadSsdMobilenetv1Model( "/weights" ),
-			faceapi.loadFaceLandmarkModel( "/weights" ),
-			faceapi.loadFaceRecognitionModel( "/weights" ),
-			faceapi.nets.tinyFaceDetector.load( '/weights' )
+			faceapi.loadSsdMobilenetv1Model( BASE_PATH + "/weights" ),
+			faceapi.loadFaceLandmarkModel( BASE_PATH + "/weights" ),
+			faceapi.loadFaceRecognitionModel( BASE_PATH + "/weights" ),
+			faceapi.nets.tinyFaceDetector.load( BASE_PATH + '/weights' )
 		] );
 
 		this.videoElm.onplay = () => {

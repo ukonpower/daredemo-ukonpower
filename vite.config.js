@@ -22,6 +22,8 @@ const input = {
 	} )(),
 };
 
+const basePath = process.env.GITHUB_PAGES ? '/daredemo-ukonpower' : '';
+
 export default defineConfig( {
 	root: 'src',
 	server: {
@@ -29,6 +31,7 @@ export default defineConfig( {
 		host: "0.0.0.0",
 	},
 	publicDir: "public",
+	base: basePath,
 	build: {
 		outDir: '../public/',
 		rollupOptions: {
@@ -51,5 +54,8 @@ export default defineConfig( {
 			} ),
 			enforce: 'pre'
 		}
-	]
+	],
+	define: {
+		BASE_PATH: `"${basePath}"`
+	}
 } );
