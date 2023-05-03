@@ -39,9 +39,6 @@ export default defineConfig( {
 		}
 	},
 	resolve: {
-		alias: {
-			"ore-three": path.join( __dirname, "src/ts/libs/ore-three/packages/ore-three/src" )
-		},
 	},
 	plugins: [
 		{
